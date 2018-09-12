@@ -14,9 +14,10 @@ void ATankPlayerController::BeginPlay()
 	}
 }
 
-// returning a pawn with type tank so that the player controller known the tank.
+/// get the tank that tankplayercontroller is a parent of the (TankPlayerController_BP)
+/// that possesing from (the game mode).
 ATank* ATankPlayerController::GetControlledTank() const
 {
-	return Cast<ATank>(GetPawn());
+	return Cast<ATank>(GetPawn()); /// we get the pawn that the player controller is possesing and treat it as a tank so that the functionality in the tank.cpp change it.
 }
 
