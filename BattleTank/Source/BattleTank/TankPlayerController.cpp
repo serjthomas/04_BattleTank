@@ -35,7 +35,7 @@ void ATankPlayerController::AimTowardsCrosshair()
 	FVector HitLocation; // OUT Parameter
 	if (GetSightRayHitLocation(HitLocation)) // Has "Side-Effect", is going to linetrace
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s"), *HitLocation.ToString())
+		UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s"), *HitLocation.ToString())
 			//TODO tell controlled tank to aim at this point
 	}
 }
@@ -48,17 +48,17 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) cons
 	FVector2D AimLocation = FVector2D(ViewportSizeX * CrossHairXLocation, ViewportSizeY * CrossHairYLocation);
 	
 	// "de-project" the screen position of the crosshair to a world direction.
-	
 	FVector LookDirection;
-	if (GetLookDirection(AimLocation, LookDirection)) 
+	if (GetLookDirection(AimLocation, LookDirection))
 	{ 
-		UE_LOG(LogTemp, Warning, TEXT("LookDirection: %s"), *LookDirection.ToString())
+		// Line-trace along that LookDirection, and see what we hit (up to max).
+		GetLookVectorHitLocation(LookDirection, OutHitLocation);
 	}
-	// Line-trace along that LookDirection, and see what we hit (up to max).
+	
 	return true;
 }
 
-bool ATankPlayerController::GetLookDirection(FVector2D & AimLocation, FVector & LookDirection) const
+bool ATankPlayerController::GetLookDirection(FVector2D& AimLocation, FVector& LookDirection) const
 {
 	FVector CameraWorldLocation; // To Be Discarded
 	return DeprojectScreenPositionToWorld(	// Location And Direction are OUT Parameters.
@@ -67,5 +67,25 @@ bool ATankPlayerController::GetLookDirection(FVector2D & AimLocation, FVector & 
 		CameraWorldLocation,
 		LookDirection
 	);
+}
+
+bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVector& OutHitLocation) const
+{
+	FHitResult HitResult;
+	FVector StartLocation = PlayerCameraManager->GetCameraLocation();
+	FVector EndLocation = StartLocation + LookDirection * LineTraceRange;
+	if (GetWorld()->LineTraceSingleByChannel(
+		HitResult,
+		StartLocation,
+		EndLocation,
+		ECollisionChannel::ECC_Visibility
+	)) {
+		OutHitLocation = HitResult.Location;
+		return true;
+	}
+	else {
+		OutHitLocation = FVector(0);
+		return false; // Line Trace Didn't Succeed
+	}
 }
 

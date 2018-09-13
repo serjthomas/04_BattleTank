@@ -31,6 +31,9 @@ private:
 	float CrossHairXLocation = 0.5f; // We edit it in Player_UI BP.
 	UPROPERTY(EditAnywhere)
 	float CrossHairYLocation = 0.33333f;
+	UPROPERTY(EditAnywhere)
+	float LineTraceRange = 1000000.0f;
 
 	bool GetLookDirection(FVector2D& AimLocation, FVector& LookDirection) const;
+	bool GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const;
 };
