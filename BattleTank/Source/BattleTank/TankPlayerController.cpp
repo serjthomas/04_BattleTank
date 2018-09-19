@@ -38,6 +38,7 @@ void ATankPlayerController::AimTowardsCrosshair()
 	{
 		GetControlledTank()->AimAt(HitLocation);
 	}
+	// else (if we looked at the sky or don't reachrange) don't call AimAt() Function.
 }
 // Get World location of linetrace through crosshair, true if hits landscape
 bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) const
