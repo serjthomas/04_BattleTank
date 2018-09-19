@@ -4,7 +4,7 @@
 #include "TankBarrel.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/Actor.h"
-#include "Components/StaticMeshComponent.h"
+
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
@@ -35,9 +35,15 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	// ...
 }
 
-void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)
+void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent * BarrelToSet)
 {
 	Barrel = BarrelToSet;
+}
+
+// (UStaticMeshComponent) Barrel Treat it as (UTankBarrel) to acsses the functionality in it.
+UTankBarrel* UTankAimingComponent::GetTankBarrel() const
+{
+	return 	Cast<UTankBarrel>(Barrel);
 }
 
 void UTankAimingComponent::AimAt(FVector OutHitLocation, float LaunchSpeed)
@@ -72,5 +78,5 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
-	Barrel->Elevate(5); // TODO Remove Magic Number
+	GetTankBarrel()->Elevate(5.f);// TODO Remove Magic Number
 }
