@@ -85,5 +85,5 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
-	GetTankBarrel()->Elevate(5.f);// TODO Remove Magic Number
+	GetTankBarrel()->Elevate(DeltaRotator.Pitch); // clamping the deltarotator to max +1 and min -1
 }
