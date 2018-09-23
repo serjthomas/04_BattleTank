@@ -31,11 +31,13 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
-	
+
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetTurretReference(UStaticMeshComponent* SetToTurret);
 private:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UPROPERTY(EditAnywhere, Category = Firing)
-	float LaunchSpeed = 100000.f; // TODO find sensible default.
+	float LaunchSpeed = 4000.f;
 };

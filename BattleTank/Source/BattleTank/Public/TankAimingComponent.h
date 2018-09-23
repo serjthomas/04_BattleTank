@@ -8,6 +8,7 @@
 
 class UTankBarrel; /// Forward Declaration , We do this in the .h files because in the .cpp files
 /// we need to call a function from that class so we need to hash include the header
+class UTankTurret;
 
 // Hold's Barrel's properties and Elevate method
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -29,14 +30,15 @@ public:
 
 	void AimAt(FVector OutHitLocation, float LaunchSpeed);
 
-	// TODO Add SetTurretReference.
-
 	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
+	void SetTurretReference(UStaticMeshComponent* TurretToSet);
 		
 private:
 	UStaticMeshComponent* Barrel = nullptr;
+	UStaticMeshComponent* Turret = nullptr;
 
 	UTankBarrel* GetTankBarrel() const;
+	UTankTurret* GetTankTurret() const;
 
 	void MoveBarrelTowards(FVector AimDirection);
 };
