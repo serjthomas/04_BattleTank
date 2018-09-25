@@ -27,13 +27,17 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	void AimAt(FVector OutHitLocation);
-	
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetTurretReference(UStaticMeshComponent* SetToTurret);
+
+	void AimAt(FVector OutHitLocation);
+
+	UFUNCTION(BlueprintCallable, Category = Firing)
+	void Fire();
+	
 private:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

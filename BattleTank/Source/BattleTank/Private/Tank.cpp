@@ -48,3 +48,8 @@ void ATank::SetTurretReference(UStaticMeshComponent * SetToTurret)
 	TankAimingComponent->SetTurretReference(SetToTurret);
 }
 
+void ATank::Fire()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Fire!"))
+}
+
