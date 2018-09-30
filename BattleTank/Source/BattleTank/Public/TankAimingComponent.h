@@ -30,15 +30,12 @@ public:
 
 	void AimAt(FVector OutHitLocation, float LaunchSpeed);
 
-	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
-	void SetTurretReference(UStaticMeshComponent* TurretToSet);
+	void SetBarrelReference(UTankBarrel* BarrelToSet);
+	void SetTurretReference(UTankTurret* TurretToSet);
 		
 private:
-	UStaticMeshComponent* Barrel = nullptr;
-	UStaticMeshComponent* Turret = nullptr;
-
-	UTankBarrel* GetTankBarrel() const;
-	UTankTurret* GetTankTurret() const;
+	UTankBarrel* Barrel = nullptr;
+	UTankTurret* Turret = nullptr;
 
 	void MoveBarrelTowards(FVector AimDirection);
 };

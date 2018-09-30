@@ -37,27 +37,16 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	// ...
 }
 
-void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent * BarrelToSet)
+void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)
 {
 	if (!BarrelToSet) { return; }
 	Barrel = BarrelToSet;
 }
 
-void UTankAimingComponent::SetTurretReference(UStaticMeshComponent* TurretToSet)
+void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
 {
 	if (!TurretToSet) { return; }
 	Turret = TurretToSet;
-}
-
-// (UStaticMeshComponent) Barrel Treat it as (UTankBarrel) to acsses the functionality in it.
-UTankBarrel* UTankAimingComponent::GetTankBarrel() const
-{
-	return Cast<UTankBarrel>(Barrel);
-}
-
-UTankTurret * UTankAimingComponent::GetTankTurret() const
-{
-	return Cast<UTankTurret>(Turret);
 }
 
 void UTankAimingComponent::AimAt(FVector OutHitLocation, float LaunchSpeed)
@@ -92,6 +81,6 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
-	GetTankBarrel()->Elevate(DeltaRotator.Pitch); // clamping the deltarotator to max +1 and min -1.
-	GetTankTurret()->RotateTurret(DeltaRotator.Yaw);
+	Barrel->Elevate(DeltaRotator.Pitch); // clamping the deltarotator to max +1 and min -1.
+	Turret->RotateTurret(DeltaRotator.Yaw);
 }
