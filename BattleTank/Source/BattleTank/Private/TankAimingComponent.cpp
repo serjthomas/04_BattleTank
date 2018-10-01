@@ -84,4 +84,6 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 
 	Barrel->Elevate(DeltaRotator.Pitch); // clamping the deltarotator to max +1 and min -1.
 	Turret->RotateTurret(DeltaRotator.Yaw);
+	
+
 }
